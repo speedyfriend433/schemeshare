@@ -15,21 +15,19 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            // Background Image with 65% opacity
             Image("img")
                 .resizable()
                 .scaledToFill()
                 .opacity(0.65)
-                .ignoresSafeArea() // Extends the image to cover the entire screen
+                .ignoresSafeArea()
             
             VStack(spacing: 20) {
-                // Title
                 Text("urlscheme share")
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(.top, 50)
-                Text("by 34306")
+                Text("From 34306 with love")
                     .font(.subheadline)
                     .fontWeight(.regular)
                     .multilineTextAlignment(.center)
@@ -37,29 +35,25 @@ struct ContentView: View {
                 Spacer()
                 
                 VStack(spacing: 20) {
-                    // Main content with 20-pixel horizontal padding
                     TextField("Enter path", text: $pathInput)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 70) // Adds 20-pixel padding from left and right
+                        .padding(.horizontal, 70)
                     
                     Button(action: {
-                        // Generate the URL text
                         textToShare = "file://a\(pathInput)"
-                        
-                        // Copy to clipboard
+                    
                         UIPasteboard.general.string = textToShare
-                        
-                        // Show the share sheet
+                    
                         isShowingShareSheet = true
                     }) {
                         Text("Export")
-                            .font(.title2) // Title font size
-                            .fontWeight(.bold) // Bold text
+                            .font(.title2)
+                            .fontWeight(.bold)
                             .foregroundColor(Color.yellow)
                     }
                     .sheet(isPresented: $isShowingShareSheet) {
                         ActivityView(activityItems: [textToShare])
-                            .presentationDetents([.medium]) // Specifies a half-screen height
+                            .presentationDetents([.medium])
                     }
                 }
                 .padding()
@@ -76,8 +70,6 @@ struct ActivityView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        
-        // Configure the presentation style to use .pageSheet, which defaults to half-screen
         controller.modalPresentationStyle = .pageSheet
         return controller
     }
