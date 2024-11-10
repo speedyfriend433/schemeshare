@@ -53,7 +53,6 @@ struct ContentView: View {
                     }
                     .sheet(isPresented: $isShowingShareSheet) {
                         ActivityView(activityItems: [textToShare])
-                            .presentationDetents([.medium])
                     }
                 }
                 .padding()
